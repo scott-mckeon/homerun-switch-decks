@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homerun Creator Program — Understand, switch, share</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#fc8f29; --orange-soft:#fef1e2; --ink:#24211e; --ink-70:#57514a;
+    --ink-40:#8a827a; --paper:#faf7f2; --card:#ffffff; --line:#ece5db;
+    --good:#2f8f5b; --good-soft:#e7f4ec; --warn:#b8791b; --warn-soft:#fdf1e0;
+    --disp:"Wallop","Bricolage Grotesque",-apple-system,sans-serif;
+    --body:"Hanken Grotesk",-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--body);background:#e9e2d8;color:var(--ink);overflow:hidden;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+  #stage{position:fixed;top:50%;left:50%;width:1280px;height:720px;transform-origin:center center;
+    background:var(--paper);overflow:hidden;box-shadow:0 24px 70px rgba(36,33,30,.22)}
+  .wordmark{position:absolute;top:40px;left:64px;font-family:var(--disp);font-weight:800;font-size:19px;letter-spacing:-.02em;color:var(--ink);z-index:4}
+  .wordmark b{color:var(--orange)}
+  #seclabel{position:absolute;top:42px;right:64px;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.14em;color:var(--ink-40);z-index:4}
+  #bar{position:absolute;top:0;left:0;height:4px;background:var(--orange);transition:width .35s ease;z-index:5}
+  .slide{position:absolute;inset:0;padding:112px 64px 72px;display:none;flex-direction:column;justify-content:flex-start}
+  .slide.active{display:flex}
+  .slide.center{justify-content:center}
+  .kicker{font-weight:800;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+  h1.title{font-size:66px;line-height:1.02}
+  h2{font-size:44px;margin-bottom:14px}
+  h2.sm{font-size:36px}
+  .lead{font-size:22px;color:var(--ink-70);font-weight:500;line-height:1.4;max-width:880px}
+  .lead b{color:var(--ink)}
+  .lead+.lead{margin-top:14px}
+  .subproof{font-size:22px;color:var(--ink);font-weight:700;margin-top:26px}
+  .src{position:absolute;bottom:34px;left:64px;font-size:12px;color:var(--ink-40);font-style:italic;max-width:800px}
+  .big-line{font-size:56px;line-height:1.06;font-family:var(--disp);font-weight:800;letter-spacing:-.02em;max-width:940px}
+  .sub{font-size:23px;color:var(--ink-70);font-weight:500;margin-top:18px;max-width:820px;line-height:1.35}
+  ul.points{list-style:none;margin-top:6px}
+  ul.points li{display:flex;align-items:flex-start;gap:14px;font-size:23px;font-weight:600;padding:9px 0;line-height:1.25;max-width:980px}
+  ul.points li .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--disp);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  ul.points.dots li::before{content:"";flex:none;width:9px;height:9px;border-radius:2px;background:var(--orange);margin-top:9px}
+  ul.points li small{display:block;font-weight:500;color:var(--ink-70);font-size:16px;margin-top:2px}
+  .contents li{font-size:26px;padding:11px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:10px}
+  .statcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 24px;display:flex;align-items:center;gap:20px}
+  .statcard .num{font-family:var(--disp);font-weight:800;font-size:52px;color:var(--orange);line-height:1;flex:none;min-width:150px}
+  .statcard .num.ink{color:var(--ink)}
+  .statcard .txt{font-size:19px;font-weight:600;line-height:1.3;color:var(--ink)}
+  .statcard .txt small{display:block;font-weight:500;color:var(--ink-70);font-size:15px;margin-top:3px}
+  .mini-split{display:flex;width:150px;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line);flex:none}
+  .mini-split .u{background:var(--orange);width:82%}.mini-split .s{background:var(--ink);width:18%}
+  .paycard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px;text-align:center;border-top:4px solid var(--orange)}
+  .paycard .pn{font-family:var(--disp);font-weight:800;font-size:56px;color:var(--good);line-height:1}
+  .paycard .pl{font-size:18px;font-weight:700;margin-top:10px}
+  .paycard .ps{font-size:15px;color:var(--ink-70);font-weight:500;margin-top:6px}
+  .diagram{display:flex;flex-direction:column;gap:12px;margin-top:4px}
+  .tier{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 20px}
+  .tier .tl{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-40);margin-bottom:10px}
+  .tier .row{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{font-family:var(--disp);font-weight:700;font-size:15px;padding:6px 12px;border-radius:7px;background:var(--paper);border:1px solid var(--line);color:var(--ink-70)}
+  .chip.net{background:var(--ink);color:#fff;border-color:var(--ink);font-size:16px;padding:9px 16px}
+  .chip.you{background:var(--orange);color:#fff;border-color:var(--orange);font-size:16px;padding:9px 18px}
+  .tierarrow{text-align:center;font-size:13px;font-weight:700;color:var(--ink-40);letter-spacing:.04em}
+  .dcaption{font-size:20px;font-weight:600;color:var(--ink);margin-top:14px;max-width:980px;line-height:1.35}
+  .dcaption b{color:var(--orange)}
+  .hero-stat{display:flex;align-items:baseline;gap:18px;margin:6px 0}
+  .hero-stat .n{font-family:var(--disp);font-weight:800;font-size:112px;color:var(--orange);line-height:.9}
+  .hero-stat .n.ink{color:var(--ink)}
+  .hero-stat .u{font-size:24px;font-weight:700;color:var(--ink-70);max-width:300px;line-height:1.2}
+  .versus{display:flex;gap:22px;align-items:stretch;margin-top:8px}
+  .vbox{flex:1;border-radius:14px;padding:26px 28px}
+  .vbox.bait{background:var(--orange-soft);border:1px solid #f6dcbb}
+  .vbox.tax{background:var(--good-soft);border:1px solid #cfe7d9}
+  .vbox .vl{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+  .vbox.bait .vl{color:var(--warn)}.vbox.tax .vl{color:#1f6e44}
+  .vbox .vn{font-family:var(--disp);font-weight:800;font-size:60px;line-height:1}
+  .vbox.bait .vn{color:var(--warn)}.vbox.tax .vn{color:var(--good)}
+  .vbox .vd{font-size:18px;font-weight:600;color:var(--ink);margin-top:8px;line-height:1.3}
+  .vmid{display:flex;align-items:center;font-family:var(--disp);font-weight:800;font-size:28px;color:var(--ink-40)}
+  .splitbar{display:flex;height:44px;border-radius:8px;overflow:hidden;border:1px solid var(--line);max-width:520px;font-family:var(--disp)}
+  .splitbar .u{background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;width:82%}
+  .splitbar .s{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;width:18%}
+  .keys{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+  .keyrow{display:flex;gap:12px;align-items:baseline;font-size:21px;max-width:920px}
+  .keyrow .dot{flex:none;width:12px;height:12px;border-radius:3px;margin-top:8px}
+  .keyrow b{font-weight:800}.keyrow span{color:var(--ink-70);font-weight:500}
+  .aside{font-size:16px;color:var(--ink-40);margin-top:20px;font-style:italic}
+  .cols{display:flex;gap:20px;align-items:stretch}
+  .plan{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px}
+  .plan.newp{border-color:var(--orange)}
+  .plan .pn{font-family:var(--disp);font-weight:800;font-size:22px;margin-bottom:2px}
+  .plan .pt{font-size:13px;color:var(--ink-40);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+  .plan .r{display:flex;justify-content:space-between;font-size:18px;padding:7px 0;border-bottom:1px solid var(--line)}
+  .plan .r:last-child{border-bottom:0}
+  .plan .r span{color:var(--ink-70)}.plan .r b{font-weight:800}
+  .calc{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 22px;max-width:640px}
+  .calc .cr{display:flex;justify-content:space-between;align-items:center;font-size:19px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .calc .cr:last-child{border-bottom:0}
+  .calc .cr span{color:var(--ink-70);font-weight:600}
+  .calc .cr b{font-family:var(--disp);font-weight:800;font-size:22px}
+  .calc .cr.off b{color:var(--warn)}
+  .calc .cr.net{background:var(--good-soft);margin:4px -22px 0;padding:12px 22px;border-radius:0 0 10px 10px}
+  .calc .cr.net span{color:#1f6e44;font-weight:800}.calc .cr.net b{color:var(--good);font-size:26px}
+  .privacy{margin-top:12px;font-size:16px;font-weight:700;color:var(--warn);background:var(--warn-soft);border-radius:7px;padding:9px 14px;display:inline-block}
+  pre.prompt{font-family:var(--mono);font-size:15.5px;line-height:1.5;background:var(--ink);color:#f3ede4;border-radius:12px;padding:22px 26px;white-space:pre-wrap;max-width:900px}
+  pre.prompt b{color:var(--orange)}
+  .cta{display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:#fff;font-weight:800;font-size:22px;padding:15px 30px;border-radius:10px;margin-top:22px;width:fit-content}
+  .footnote{font-size:16px;color:var(--ink-70);margin-top:18px;font-weight:600;background:var(--warn-soft);border-radius:8px;padding:10px 14px;max-width:900px}
+  #counter{position:absolute;bottom:30px;right:64px;font-size:15px;font-weight:700;color:var(--ink-40);font-family:var(--mono);z-index:4}
+  .nav{position:absolute;bottom:26px;left:64px;display:flex;gap:8px;z-index:6}
+  .nav button{font-family:var(--body);border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;width:40px;height:40px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .nav button:hover{border-color:var(--orange)}
+  #notes{position:absolute;left:0;right:0;bottom:0;background:rgba(36,33,30,.97);color:#f3ede4;padding:16px 64px;font-size:15px;line-height:1.4;display:none;z-index:8}
+  #notes.on{display:block}
+  #notes .nl{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);margin-bottom:4px}
+  #hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);font-size:13px;color:var(--ink-40);font-weight:600;z-index:4}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bar"></div>
+  <div class="wordmark">home<b>run</b> · creators</div>
+  <div id="seclabel"></div>
+
+  <!-- 1 TITLE -->
+  <section class="slide center" data-sec="" data-notes="This is the creator pitch. Learn it, save on your own bill, share it, get paid.">
+    <div class="kicker">The Homerun Creator Program</div>
+    <h1 class="title">Understand your bills.<br>Switch. <span style="color:var(--orange)">Then share it.</span></h1>
+    <p class="subproof">Learn it, save on your own bill, and get paid to share the journey.</p>
+  </section>
+
+  <!-- 2 THE DEAL -->
+  <section class="slide" data-sec="The deal" data-notes="One-slide overview of the whole program.">
+    <h2 class="sm">How the program works</h2>
+    <ul class="points">
+      <li><span class="n">1</span> Go through the journey yourself, understand your bill and switch</li>
+      <li><span class="n">2</span> Save real money on your own energy</li>
+      <li><span class="n">3</span> Share your story with your audience, in your own words</li>
+      <li><span class="n">4</span> Get paid for the switch, the content, and the reach</li>
+    </ul>
+    <p class="lead" style="margin-top:14px">The rest of this deck is the journey you'll take, then teach.</p>
+  </section>
+
+  <!-- 3 BRIDGE -->
+  <section class="slide center" data-sec="First, you" data-notes="Authenticity is the point. You do it first, on your own bill.">
+    <div class="big-line">First, you go through it yourself.</div>
+    <p class="sub">Everything your audience will learn, you learn first, on your own bill. That's what makes it real, and it's what the rules require.</p>
+  </section>
+
+  <!-- 4 HARD BY DESIGN -->
+  <section class="slide" data-sec="Why it's confusing" data-notes="Over 30 retailers, AGL alone runs 1,368 plans.">
+    <h2>Energy plans are confusing, possibly by design</h2>
+    <div class="grid2">
+      <div class="statcard"><div class="num">30+</div><div class="txt">Retailers competing in NSW<small>All selling the same electricity</small></div></div>
+      <div class="statcard"><div class="num">1,368</div><div class="txt">Electricity plans from AGL alone<small>One retailer. Now multiply that out.</small></div></div>
+      <div class="statcard"><div class="mini-split"><div class="u"></div><div class="s"></div></div><div class="txt">Your price is really just two numbers<small>Supply and usage, buried in the detail</small></div></div>
+      <div class="statcard"><div class="num ink" style="font-size:38px;min-width:150px">% off</div><div class="txt">Discounts quoted off a base rate<small>A number they never actually show you</small></div></div>
+    </div>
+    <p class="src">Sources: Canstar (NSW providers, 2026), AGL plan count via Energy Made Easy (AER).</p>
+  </section>
+
+  <!-- 5 INDUSTRY DIAGRAM -->
+  <section class="slide" data-sec="How it works" data-notes="Same electrons, same wires. Retailers are the billing and marketing layer.">
+    <h2 class="sm">It's all the same wires</h2>
+    <div class="diagram">
+      <div class="tier" style="text-align:center"><span class="chip you">You</span></div>
+      <div class="tierarrow">you pick one retailer</div>
+      <div class="tier"><div class="tl">30+ retailers · a billing and marketing layer</div><div class="row"><span class="chip">AGL</span><span class="chip">Origin</span><span class="chip">EnergyAustralia</span><span class="chip">Red Energy</span><span class="chip">Alinta</span><span class="chip">ENGIE</span><span class="chip">Momentum</span><span class="chip">Tango</span><span class="chip">and 20+ more</span></div></div>
+      <div class="tierarrow">all buy from the same market and use the same</div>
+      <div class="tier"><div class="tl">The network · poles and wires (regional monopoly)</div><div class="row"><span class="chip net">Ausgrid</span><span class="chip net">Endeavour Energy</span><span class="chip net">Essential Energy</span></div></div>
+    </div>
+    <p class="dcaption"><b>Same electrons, same wires, whoever you pay.</b> The retailer is just the billing and marketing layer on top.</p>
+  </section>
+
+  <!-- 6 MARKETING SPEND -->
+  <section class="slide" data-sec="How it works" data-notes="They compete on marketing, not on a better deal.">
+    <h2 class="sm">So what are they competing on? Marketing.</h2>
+    <div class="hero-stat"><div class="n">$125m</div><div class="u">what AGL spent on advertising and marketing in a single year</div></div>
+    <ul class="points dots" style="margin-top:10px">
+      <li>They sponsor football clubs, run TV campaigns, and buy your attention</li>
+      <li>Fossil fuel companies spend $14m to $18m a year just sponsoring Australian sport</li>
+      <li>None of that spend makes your actual electricity any different or cheaper</li>
+    </ul>
+    <p class="src">Sources: AGL's own half-year accounts (H1 FY25) show $63m on campaigns and advertising in six months, roughly $125m a year; Guardian Australia on sport sponsorship.</p>
+  </section>
+
+  <!-- 7 CONFUSOPOLY -->
+  <section class="slide center" data-sec="Why it's confusing" data-notes="When comparing is this hard, people stay put.">
+    <div class="kicker">This has a name</div>
+    <h2 style="font-size:64px;margin-bottom:22px">A Confusopoly</h2>
+    <p class="lead" style="font-size:26px;max-width:900px">A market where companies make their pricing deliberately confusing, so you can't compare, which lets them keep prices high. Energy, telco and insurance are the textbook cases.</p>
+  </section>
+
+  <!-- 8 WELCOME OFFERS -->
+  <section class="slide" data-sec="The game" data-notes="The 200 offer is bait. They make it back because you stay for years.">
+    <h2 class="sm">Why they can afford to give you $200</h2>
+    <div class="versus">
+      <div class="vbox bait"><div class="vl">What they give you</div><div class="vn">$200</div><div class="vd">A welcome offer, once. Usually a credit on your first bill.</div></div>
+      <div class="vmid">then</div>
+      <div class="vbox tax"><div class="vl">What it quietly costs you</div><div class="vn">~$221<span style="font-size:24px"> / year</span></div><div class="vd">The loyalty tax. What long-standing customers pay above the best offers, every year they stay.</div></div>
+    </div>
+    <p class="dcaption" style="margin-top:18px">They give it back once, because they know you'll stay for years. The offer is bait.</p>
+    <p class="src">Source: ACCC, households on the same plan 3+ years pay around $221 a year more.</p>
+  </section>
+
+  <!-- 9 NOT YOUR FAULT -->
+  <section class="slide center" data-sec="Why it's confusing" data-notes="The trust turn.">
+    <h2 style="max-width:900px">Most people don't know<br>their own rates.<br><span style="color:var(--orange)">That's not their fault.</span></h2>
+    <p class="lead" style="margin-top:18px;font-size:24px">Almost no one can name their supply charge or usage rate. It's designed that way. This fixes it in ten minutes.</p>
+  </section>
+
+  <!-- 10 REFERENCE PRICE WHAT -->
+  <section class="slide" data-sec="The reference price" data-notes="NSW Ausgrid 2025-26 is 1,965 a year on a 3,900 kWh benchmark.">
+    <h2 class="sm">The government sets a Reference Price</h2>
+    <div class="hero-stat"><div class="n ink">$1,965</div><div class="u">the NSW reference price, per year (Ausgrid, residential, 2025-26)</div></div>
+    <ul class="points dots" style="margin-top:8px">
+      <li>Based on one benchmark household using 3,900 kWh a year</li>
+      <li>Set each year by the regulator, the Australian Energy Regulator</li>
+      <li>Retailers must show their plan as a percentage above or below it</li>
+    </ul>
+    <p class="src">Source: AER, Default Market Offer 2025-26, Ausgrid residential without controlled load.</p>
+  </section>
+
+  <!-- 11 REFERENCE PRICE CHALLENGE -->
+  <section class="slide" data-sec="The reference price" data-notes="It sounds helpful, it isn't.">
+    <h2 class="sm">But it still doesn't help you</h2>
+    <ul class="points">
+      <li><span class="n">1</span> It assumes 3,900 kWh a year. That is not your usage. Yours could be half that, or double.</li>
+      <li><span class="n">2</span> It is one fixed annual number. Arbitrary by design, it can't reflect how you actually live.</li>
+      <li><span class="n">3</span> Retailers game it. "18% less than the reference price" sounds great, but it's measured against a benchmark that isn't you.</li>
+    </ul>
+  </section>
+
+  <!-- 12 TWO NUMBERS -->
+  <section class="slide" data-sec="The two numbers" data-notes="Two numbers, that's the whole game.">
+    <h2 class="sm">The good news: you only need two numbers</h2>
+    <div class="splitbar"><div class="u">Usage</div><div class="s">Supply</div></div>
+    <div class="keys">
+      <div class="keyrow"><span class="dot" style="background:var(--ink)"></span><span><b>Daily supply charge.</b> A fixed cost every day just to be connected, even at zero usage. Like line rental.</span></div>
+      <div class="keyrow"><span class="dot" style="background:var(--orange)"></span><span><b>Usage rate.</b> What you pay per unit you actually use. The meter ticking.</span></div>
+    </div>
+    <p class="aside">Time of use and controlled load also exist. If you have those, it's advanced mode.</p>
+  </section>
+
+  <!-- 13 STEPS -->
+  <section class="slide" data-sec="The steps" data-notes="Six steps, a few minutes.">
+    <h2 class="sm">The steps you follow</h2>
+    <ul class="points">
+      <li><span class="n">1</span> Get your last electricity or gas bill</li>
+      <li><span class="n">2</span> Screenshot the rates and usage only, never your personal details</li>
+      <li><span class="n">3</span> Screenshot the new plan's rates</li>
+      <li><span class="n">4</span> Ask AI to compare for your usage</li>
+      <li><span class="n">5</span> Subtract any one-off welcome offer</li>
+      <li><span class="n">6</span> Double-check the working</li>
+    </ul>
+  </section>
+
+  <!-- 14 WORKED EXAMPLE -->
+  <section class="slide" data-sec="Let's do it" data-notes="AI is a calculator you sanity-check. Ongoing it's about 530 a year cheaper, the 200 is a one-off.">
+    <div class="kicker">Let's actually do it</div>
+    <div class="cols">
+      <div class="plan">
+        <div class="pn">Your plan</div><div class="pt">from your bill</div>
+        <div class="r"><span>Supply</span><b>$1.66 / day</b></div>
+        <div class="r"><span>Usage</span><b>33.13c / kWh</b></div>
+        <div class="r"><span>Your usage</span><b>41.3 kWh / day</b></div>
+      </div>
+      <div class="plan newp">
+        <div class="pn">A market plan</div><div class="pt">sample rates</div>
+        <div class="r"><span>Supply</span><b>$1.45 / day</b></div>
+        <div class="r"><span>Usage</span><b>30.1c / kWh</b></div>
+        <div class="r"><span>Welcome offer</span><b>$200 one-off</b></div>
+      </div>
+    </div>
+    <div class="calc">
+      <div class="cr"><span>Your plan, one quarter</span><b>$1,381</b></div>
+      <div class="cr"><span>New plan, same quarter</span><b>$1,249</b></div>
+      <div class="cr off"><span>Less the welcome offer</span><b>- $200</b></div>
+      <div class="cr net"><span>New plan, your first bill</span><b>$1,049</b></div>
+    </div>
+    <p class="privacy">Screenshot the rates only. Not your name, address or account number.</p>
+    <p class="src">Rates from a real bill. The market plan is sample data. Ongoing, the new plan is about $530 a year cheaper. The $200 is a one-off.</p>
+  </section>
+
+  <!-- 15 PROMPT -->
+  <section class="slide" data-sec="The prompt" data-notes="This is a great thing to share with your audience.">
+    <h2 class="sm" style="margin-bottom:16px">The prompt, ready to copy</h2>
+    <pre class="prompt">I'm comparing two energy plans for my own usage. I'll paste my current
+plan's rates and usage from my last bill, and a new plan's rates.
+
+Please:
+1. Compare them using MY usage.
+2. Tell me which is cheaper per year for my usage, and by how much.
+3. Split it: ongoing saving on rates vs any one-off welcome credit.
+4. Subtract the one-off welcome offer so I see the true ongoing position.
+5. Show your working, then re-check every number against what I pasted
+   and flag anything you're unsure about.
+Do not guess missing numbers. Ask me if anything isn't clear.
+
+<b>CURRENT PLAN:</b> daily supply charge __ c/day; usage rate __ c/kWh;
+my usage __ kWh over __ days.
+<b>NEW PLAN:</b> daily supply charge __ c/day; usage rate __ c/kWh;
+welcome offer $__ (one-off).</pre>
+  </section>
+
+  <!-- 16-19 WHAT YOU'LL FIND -->
+  <section class="slide center" data-sec="What you'll find" data-notes="This is the story your audience relates to.">
+    <div class="big-line">Most people have no idea what their plan or rates are.</div>
+    <p class="sub">Nearly everyone starts here. So will most of your audience.</p>
+  </section>
+  <section class="slide center" data-sec="What you'll find" data-notes="The empowerment beat, and your best content angle.">
+    <div class="big-line">It clicks fast, and it starts to feel like a game.</div>
+    <p class="sub">The moment it clicks is the moment worth filming.</p>
+  </section>
+  <section class="slide center" data-sec="What you'll find" data-notes="The honest line that builds trust with an audience.">
+    <div class="big-line">Welcome offers win short term. The value fades.</div>
+    <p class="sub">The biggest discount is usually a one-off credit, then the rate reverts.</p>
+  </section>
+  <section class="slide center" data-sec="What you'll find" data-notes="Sets up the ongoing relationship, and Homerun.">
+    <div class="big-line">Roughly every 6 months is the rhythm.</div>
+    <p class="sub">That's when it's usually worth another look.</p>
+  </section>
+
+  <!-- 20 CREATOR PLAN INTRO -->
+  <section class="slide center" data-sec="Our creator plan" data-notes="Now the program. Share the journey, referencing your own real story.">
+    <div class="kicker">Our creator plan</div>
+    <h2 style="margin-bottom:16px">Turn your switch<br>into a story worth sharing</h2>
+    <ul class="points" style="margin-top:6px">
+      <li><span class="n">1</span> Share this journey with others</li>
+      <li><span class="n">2</span> Reference your own personal story and savings</li>
+    </ul>
+  </section>
+
+  <!-- 21 THE STRUCTURE -->
+  <section class="slide" data-sec="The structure" data-notes="This is the compliance backbone. Energy is heavily regulated, so it's built on your genuine, own experience.">
+    <div class="kicker">Built on your own story</div>
+    <h2 class="sm" style="margin-bottom:8px">The rules keep it honest</h2>
+    <p class="lead" style="margin-bottom:12px">Energy is heavily regulated, so the program is built around your genuine experience, not claims about anyone else.</p>
+    <ul class="points">
+      <li><span class="n">1</span> You must actually switch yourself</li>
+      <li><span class="n">2</span> Only talk about your own numbers</li>
+      <li><span class="n">3</span> Focus on what made it click: how your bill works, and how you save</li>
+      <li><span class="n">4</span> Homerun makes it easy to review and switch</li>
+    </ul>
+    <p class="footnote">Always disclose the paid partnership. It's required, and it builds trust with your audience.</p>
+  </section>
+
+  <!-- 22 COMPENSATION -->
+  <section class="slide" data-sec="What you earn" data-notes="Three ways you get paid. Simple and stackable.">
+    <div class="kicker">What you earn</div>
+    <h2 class="sm" style="margin-bottom:6px">How we pay creators</h2>
+    <div class="grid3">
+      <div class="paycard"><div class="pn">$150</div><div class="pl">Gift card for switching</div><div class="ps">The public offer, same as everyone gets</div></div>
+      <div class="paycard"><div class="pn">$100</div><div class="pl">For creating a video</div><div class="ps">Make it and post it</div></div>
+      <div class="paycard"><div class="pn">10%</div><div class="pl">Of ad spend</div><div class="ps">Whitelisted, or run from our account</div></div>
+    </div>
+  </section>
+
+  <!-- 23 CLOSE -->
+  <section class="slide center" data-sec="Join us" data-notes="Clear invite. The energy is do it, save, share, get paid.">
+    <div class="kicker">Join us</div>
+    <h2 style="margin-bottom:16px">Understand it, save on it,<br>and share it with your people</h2>
+    <p class="lead" style="font-size:24px">Homerun is built to help renters understand their bills and switch to the right plan. Go through it yourself, then bring your audience along.</p>
+    <div class="cta">Join the Homerun Creator Program</div>
+  </section>
+
+  <div class="nav"><button id="prev" aria-label="Previous">&#8592;</button><button id="next" aria-label="Next">&#8594;</button></div>
+  <div id="counter"></div>
+  <div id="hint">Arrow keys to move. Press N for presenter notes.</div>
+  <div id="notes"><div class="nl">Presenter notes</div><span id="notestext"></span></div>
+</div>
+
+<script>
+  const stage=document.getElementById('stage');
+  function fit(){const s=Math.min(window.innerWidth/1280,window.innerHeight/720);stage.style.transform='translate(-50%,-50%) scale('+s+')';}
+  window.addEventListener('resize',fit);fit();
+  const slides=[...document.querySelectorAll('.slide')];
+  const bar=document.getElementById('bar'),counter=document.getElementById('counter'),
+        seclabel=document.getElementById('seclabel'),notes=document.getElementById('notes'),
+        notestext=document.getElementById('notestext'),hint=document.getElementById('hint');
+  let i=0,notesOn=false;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,x)=>s.classList.toggle('active',x===i));
+    bar.style.width=((i+1)/slides.length*100)+'%';
+    counter.textContent=(i+1)+' / '+slides.length;
+    seclabel.textContent=slides[i].dataset.sec||'';
+    notestext.textContent=slides[i].dataset.notes||'';
+    hint.style.display=i===0?'block':'none';
+  }
+  function next(){show(i+1)}function prev(){show(i-1)}
+  document.getElementById('next').onclick=next;
+  document.getElementById('prev').onclick=prev;
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();prev()}
+    else if(e.key.toLowerCase()==='n'){notesOn=!notesOn;notes.classList.toggle('on',notesOn)}
+    else if(e.key==='Home'){show(0)}else if(e.key==='End'){show(slides.length-1)}
+  });
+  show(0);
+</script>
+</body>
+</html>
