@@ -69,6 +69,8 @@
   .tierarrow{text-align:center;font-size:13px;font-weight:700;color:var(--ink-40);letter-spacing:.04em}
   .dcaption{font-size:20px;font-weight:600;color:var(--ink);margin-top:14px;max-width:980px;line-height:1.35}
   .dcaption b{color:var(--orange)}
+  .punch{font-family:var(--disp);font-weight:800;font-size:38px;line-height:1.12;margin-top:14px;max-width:1080px}
+  .punch span{color:var(--orange)}
   .hero-stat{display:flex;align-items:baseline;gap:18px;margin:6px 0}
   .hero-stat .n{font-family:var(--disp);font-weight:800;font-size:112px;color:var(--orange);line-height:.9}
   .hero-stat .n.ink{color:var(--ink)}
@@ -203,7 +205,8 @@
       <div class="vmid">then</div>
       <div class="vbox tax"><div class="vl">What it quietly costs you</div><div class="vn">~$221<span style="font-size:24px"> / year</span></div><div class="vd">The loyalty tax. What long-standing customers pay above the best offers, every year they stay.</div></div>
     </div>
-    <p class="dcaption" style="margin-top:18px">They give it back once, because they know you'll stay for years. The offer is bait.</p>
+    <p class="dcaption" style="margin-top:12px">They give it back once, because they know you'll stay for years.</p>
+    <div class="punch">The offer is bait. <span>But it's your potential benefit, if you regularly switch.</span></div>
     <p class="src">Source: ACCC, households on the same plan 3+ years pay around $221 a year more.</p>
   </section>
 
@@ -213,26 +216,16 @@
     <p class="lead" style="margin-top:18px;font-size:24px">Almost no one can name their supply charge or usage rate. It's designed that way. This fixes it in ten minutes.</p>
   </section>
 
-  <!-- 10 REFERENCE PRICE WHAT -->
-  <section class="slide" data-sec="The reference price" data-notes="NSW Ausgrid 2025-26 is 1,965 a year on a 3,900 kWh benchmark.">
-    <h2 class="sm">The government sets a Reference Price</h2>
-    <div class="hero-stat"><div class="n ink">$1,965</div><div class="u">the NSW reference price, per year (Ausgrid, residential, 2025-26)</div></div>
-    <ul class="points dots" style="margin-top:8px">
-      <li>Based on one benchmark household using 3,900 kWh a year</li>
-      <li>Set each year by the regulator, the Australian Energy Regulator</li>
-      <li>Retailers must show their plan as a percentage above or below it</li>
+  <!-- 10 REFERENCE PRICE (merged) -->
+  <section class="slide" data-sec="The reference price" data-notes="NSW Ausgrid 2025-26 is 1,965 a year on a 3,900 kWh benchmark. Sounds helpful, doesn't help you.">
+    <h2 class="sm">The Reference Price doesn't rescue you</h2>
+    <div class="hero-stat" style="margin:2px 0 4px"><div class="n ink" style="font-size:84px">$1,965</div><div class="u">the NSW reference price a year: Ausgrid, a 3,900 kWh benchmark, set by the AER</div></div>
+    <ul class="points" style="margin-top:2px">
+      <li><span class="n">1</span> It assumes 3,900 kWh a year. That's not your usage. Yours could be half that, or double.</li>
+      <li><span class="n">2</span> It's one fixed annual number. It can't reflect how you actually live.</li>
+      <li><span class="n">3</span> Retailers game it. "18% off the reference price" is measured against a benchmark that isn't you.</li>
     </ul>
     <p class="src">Source: AER, Default Market Offer 2025-26, Ausgrid residential without controlled load.</p>
-  </section>
-
-  <!-- 11 REFERENCE PRICE CHALLENGE -->
-  <section class="slide" data-sec="The reference price" data-notes="It sounds helpful, it isn't.">
-    <h2 class="sm">But it still doesn't help you</h2>
-    <ul class="points">
-      <li><span class="n">1</span> It assumes 3,900 kWh a year. That is not your usage. Yours could be half that, or double.</li>
-      <li><span class="n">2</span> It is one fixed annual number. Arbitrary by design, it can't reflect how you actually live.</li>
-      <li><span class="n">3</span> Retailers game it. "18% less than the reference price" sounds great, but it's measured against a benchmark that isn't you.</li>
-    </ul>
   </section>
 
   <!-- 12 TWO NUMBERS -->
@@ -280,7 +273,8 @@
       <div class="cr"><span>Your plan, one quarter</span><b>$1,381</b></div>
       <div class="cr"><span>New plan, same quarter</span><b>$1,249</b></div>
       <div class="cr off"><span>Less the welcome offer</span><b>- $200</b></div>
-      <div class="cr net"><span>New plan, your first bill</span><b>$1,049</b></div>
+      <div class="cr"><span>New plan, your first bill</span><b>$1,049</b></div>
+      <div class="cr net"><span>Your saving and benefit this quarter</span><b>+ $332</b></div>
     </div>
     <p class="privacy">Screenshot the rates only. Not your name, address or account number.</p>
     <p class="src">Rates from a real bill. The market plan is sample data. Ongoing, the new plan is about $530 a year cheaper. The $200 is a one-off.</p>
@@ -313,7 +307,7 @@ welcome offer $__ (one-off).</pre>
     <p class="sub">Nearly everyone starts here. So will most of your audience.</p>
   </section>
   <section class="slide center" data-sec="What you'll find" data-notes="The empowerment beat, and your best content angle.">
-    <div class="big-line">It clicks fast, and it starts to feel like a game.</div>
+    <div class="big-line">Once it clicks, you know how to game the energy plans.</div>
     <p class="sub">The moment it clicks is the moment worth filming.</p>
   </section>
   <section class="slide center" data-sec="What you'll find" data-notes="The honest line that builds trust with an audience.">
