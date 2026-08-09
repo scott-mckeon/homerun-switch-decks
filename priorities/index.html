@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Homerun Switch — Ramp Priorities</title>
+<style>
+  :root{
+    --orange:#fc8f29;
+    --ink:#24211e;
+    --paper:#faf7f2;
+    --paper2:#f2ece2;
+    --muted:#6b6459;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;background:#000;font-family:'Wallop','Inter',system-ui,-apple-system,sans-serif;color:var(--ink);}
+  #stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+  #canvas{position:relative;width:1280px;height:720px;background:var(--paper);overflow:hidden;transform-origin:center center;box-shadow:0 20px 80px rgba(0,0,0,.5);}
+  .slide{position:absolute;inset:0;padding:72px 88px;display:none;flex-direction:column;}
+  .slide.active{display:flex;}
+  .slide.dark{background:var(--ink);color:var(--paper);}
+  .kicker{font-size:16px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:20px;}
+  h1{font-size:66px;line-height:1.02;font-weight:800;letter-spacing:-.02em;}
+  h2{font-size:44px;line-height:1.06;font-weight:800;letter-spacing:-.02em;margin-bottom:28px;}
+  .lead{font-size:26px;line-height:1.35;color:var(--muted);max-width:900px;}
+  .dark .lead{color:#cdc6ba;}
+  .muted{color:var(--muted);}
+  ul{list-style:none;display:flex;flex-direction:column;gap:16px;margin-top:8px;}
+  li{font-size:24px;line-height:1.3;padding-left:34px;position:relative;}
+  li::before{content:"";position:absolute;left:0;top:11px;width:14px;height:14px;background:var(--orange);border-radius:3px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:12px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:12px;}
+  .card{background:var(--paper2);border-radius:18px;padding:26px 28px;}
+  .dark .card{background:#332f2a;}
+  .card .n{font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:10px;}
+  .card h3{font-size:24px;font-weight:800;margin-bottom:8px;letter-spacing:-.01em;}
+  .card p{font-size:17px;line-height:1.35;color:var(--muted);}
+  .dark .card p{color:#b8b0a4;}
+  .spacer{flex:1;}
+  .foot{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted);letter-spacing:.04em;}
+  .tbl{width:100%;border-collapse:collapse;margin-top:6px;font-size:19px;}
+  .tbl td{padding:11px 8px;border-bottom:1px solid #e2dacd;vertical-align:top;}
+  .tbl td:first-child{font-weight:700;width:38%;}
+  .tbl td:last-child{color:var(--muted);}
+  #hud{position:fixed;bottom:14px;right:18px;color:#666;font-size:13px;z-index:10;font-family:system-ui;}
+  .warn li::before{background:#d94f4f;}
+</style>
+</head>
+<body>
+<div id="stage"><div id="canvas">
+
+  <!-- 1 -->
+  <section class="slide active">
+    <div class="kicker">Homerun Switch</div>
+    <div class="spacer"></div>
+    <h1>Ramp priorities</h1>
+    <p class="lead" style="margin-top:22px;">How we scale Switch this week, in the right order. Foundations first, then the funnel, then the systems that make it repeat.</p>
+    <div class="spacer"></div>
+    <div class="foot"><span>Team alignment</span><span>August 2026</span></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="slide dark">
+    <div class="kicker">The moment</div>
+    <h2>The window is open. Let us not waste it.</h2>
+    <div class="grid3">
+      <div class="card"><div class="n">Momentum</div><h3>7 switches in a day</h3><p>Including Konrad from Punters Politics. All on zero paid spend.</p></div>
+      <div class="card"><div class="n">Timing</div><h3>The mask is off</h3><p>Government energy rebates ended in January. People now feel the real rate, with nothing softening it.</p></div>
+      <div class="card"><div class="n">Fit</div><h3>An angry audience</h3><p>Cost of living, anti rip off, ready to act. Our honest story is built for this exact moment.</p></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot"><span>2</span><span>Homerun Switch</span></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="slide">
+    <div class="kicker">Our positioning</div>
+    <h2>You are not paying too much for power. You are paying too much for confusion.</h2>
+    <ul>
+      <li><b>Educate, empower, equip.</b> Teach people how the system works, show them they can beat it, and be the easy tool. Never "trust us over them".</li>
+      <li><b>Honest proof.</b> Real old plan against new plan. Sometimes switch and save, sometimes you are already on a good deal. The honesty is the differentiator.</li>
+      <li><b>Renter champion.</b> Backing Homerun means backing a renter first company. Lead with the personal benefit, mission second.</li>
+      <li><b>The villain is retailer complexity,</b> never comparison sites.</li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="foot"><span>3</span><span>Homerun Switch</span></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="slide dark">
+    <div class="kicker">The strategy in one line</div>
+    <div class="spacer"></div>
+    <h1 style="font-size:52px;">Content brings them in.<br>The site converts them.<br>Systems make it repeat.</h1>
+    <div class="spacer"></div>
+    <p class="lead">Every priority below sits in one of those three jobs. If it does not, it waits.</p>
+    <div class="foot" style="margin-top:24px;"><span>4</span><span>Homerun Switch</span></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="slide">
+    <div class="kicker">How we are sequencing it</div>
+    <h2>Three tiers. Foundations gate everything.</h2>
+    <div class="grid3">
+      <div class="card"><div class="n">Tier 0 · Now</div><h3>Foundations</h3><p>Tracking and CIMET template. Without these, the whole ramp is unmeasurable or unapprovable.</p></div>
+      <div class="card"><div class="n">Tier 1 · This week</div><h3>The funnel</h3><p>Explainer video, landing page, social proof, booking call. The assets that bring people in and convert them.</p></div>
+      <div class="card"><div class="n">Tier 2 · Next</div><h3>The systems</h3><p>Referrals, email, creator program. What makes acquisition repeat instead of one off.</p></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot"><span>5</span><span>Homerun Switch</span></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="slide">
+    <div class="kicker">Tier 0 · Foundations · do first</div>
+    <h2>The two things that gate the ramp</h2>
+    <div class="grid2">
+      <div class="card"><div class="n">1 · Tracking</div><h3>Measure a switch back to its source</h3><p>Custom funnel events have been dead since 30 July. Rebuild the three core events and stand up the compare page funnel. Do not scale spend until we can see what drove a switch.</p></div>
+      <div class="card"><div class="n">2 · CIMET template</div><h3>One approval, then reuse</h3><p>Content template is in approval now. Once cleared: Bel is the first test case, then Konrad, then scale everywhere. Turns approval from a per asset bottleneck into a green light.</p></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot"><span>6</span><span>Owners: Brendon · Scott + Bel</span></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="slide">
+    <div class="kicker">Tier 1 · The funnel · this week</div>
+    <h2>Bring them in, then convert them</h2>
+    <div class="grid2">
+      <div class="card"><div class="n">Draw</div><h3>YouTube explainer</h3><p>The confusion thesis. Public interest first, Homerun in the last 30 seconds. One shoot, cut for Reels, TikTok, email and site.</p></div>
+      <div class="card"><div class="n">Convert</div><h3>Landing page explainer</h3><p>The interactive scroll journey. Strong already. Needs an honesty pass before we scale traffic onto it.</p></div>
+      <div class="card"><div class="n">Convince</div><h3>Social proof</h3><p>Live switch counter, real consented stories including the honest ones, Konrad once switched. The page has none of this today.</p></div>
+      <div class="card"><div class="n">Reassure</div><h3>Booking call with Scott</h3><p>A 20 minute call for sceptical or unsure visitors. Immediate site upgrade. Reassures fence sitters and teaches us why people hesitate.</p></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot"><span>7</span><span>Owners: Bel · Brendon · Scott</span></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="slide warn">
+    <div class="kicker">Before we scale traffic</div>
+    <h2>Three honesty fixes on the landing page</h2>
+    <ul>
+      <li><b>"Compare again in 6 months" and the reminders dashboard.</b> Implies ongoing monitoring we do not do yet. Soften to the honest one off check, or build the reminder.</li>
+      <li><b>Hardcoded retailer recommendation.</b> Must be a genuine live result, not a baked in pick, or it reads as a paid placement.</li>
+      <li><b>The best case savings example.</b> Not every switch saves ongoing. Label it clearly as an example, and make the example honest.</li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="foot"><span>8</span><span>Fix before the explainer sends traffic here</span></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="slide">
+    <div class="kicker">Tier 2 · The systems · next</div>
+    <h2>Make acquisition repeat</h2>
+    <div class="grid3">
+      <div class="card"><div class="n">Cheapest growth</div><h3>Flatmate finder referral</h3><p>An owned, warm audience of renters we already have. Near zero cost to acquire. Size this now, it may deserve to jump the queue.</p></div>
+      <div class="card"><div class="n">Blocked</div><h3>Email sequences</h3><p>The drop off sequence needs tracking restored and the DNS dependency cleared. Not a content problem. Sequence after both.</p></div>
+      <div class="card"><div class="n">Scale</div><h3>Creator program</h3><p>Konrad is the proof case. The program is the channel. Productise the honest switch kit so each creator is not bespoke.</p></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="foot"><span>9</span><span>Owners: Scott · Matt · Bel</span></div>
+  </section>
+
+  <!-- 10 -->
+  <section class="slide dark">
+    <div class="kicker">Before we scale spend</div>
+    <div class="spacer"></div>
+    <h2 style="font-size:52px;">Unit economics come first.</h2>
+    <p class="lead">We confirm every switch pays for itself before we pour on spend. Scale a profitable switch and it compounds. Scale an unprofitable one and it drains. This is the gate on the accelerator.</p>
+    <div class="foot" style="margin-top:24px;"><span>10</span><span>Owner: Scott</span></div>
+  </section>
+
+  <!-- 11 -->
+  <section class="slide">
+    <div class="kicker">Non negotiables</div>
+    <h2>The guardrails on everything we ship</h2>
+    <ul>
+      <li><b>Compliance sign off</b> on every piece of Switch content before it films or posts.</li>
+      <li><b>Honest proof.</b> No savings guarantee. Show what is actually there per household.</li>
+      <li><b>Consent first.</b> No real switcher on the site or in content without consent captured close to the switch.</li>
+      <li><b>Brand and voice.</b> Australian English, no dashes, rewards not cash back.</li>
+      <li><b>Disclosure and legal.</b> Paid creator content disclosed. Anything naming a company gets a legal eye.</li>
+    </ul>
+    <div class="spacer"></div>
+    <div class="foot"><span>11</span><span>Homerun Switch</span></div>
+  </section>
+
+  <!-- 12 -->
+  <section class="slide">
+    <div class="kicker">This week</div>
+    <h2>If we only land five things</h2>
+    <table class="tbl">
+      <tr><td>Rebuild the core tracking events</td><td>Brendon, with Matt verifying</td></tr>
+      <tr><td>Land the compliance content template</td><td>Scott, then Bel submits as the first test case</td></tr>
+      <tr><td>Landing page honesty fixes plus booking link</td><td>Brendon builds, Scott adds booking</td></tr>
+      <tr><td>Ship the YouTube explainer</td><td>Bel produces, Konrad voice, Scott sign off</td></tr>
+      <tr><td>Confirm the unit economics</td><td>Scott</td></tr>
+    </table>
+    <div class="spacer"></div>
+    <div class="foot"><span>12</span><span>Owners proposed, confirm in standup</span></div>
+  </section>
+
+  <!-- 13 -->
+  <section class="slide dark">
+    <div class="kicker">The one line</div>
+    <div class="spacer"></div>
+    <h1>Beat the confusion.<br>Empower the renter.</h1>
+    <p class="lead" style="margin-top:22px;">Foundations this week. Funnel this week. Systems next. Then we scale everywhere.</p>
+    <div class="spacer"></div>
+    <div class="foot"><span>13</span><span>Homerun Switch · Ramp Priorities</span></div>
+  </section>
+
+</div></div>
+<div id="hud">← → to move</div>
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  let i=0;
+  function show(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,x)=>s.classList.toggle('active',x===i));
+  }
+  function fit(){
+    const c=document.getElementById('canvas');
+    const s=Math.min(window.innerWidth/1280,window.innerHeight/720);
+    c.style.transform='scale('+s+')';
+  }
+  window.addEventListener('resize',fit); fit(); show(0);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' ')show(i+1);
+    else if(e.key==='ArrowLeft')show(i-1);
+  });
+  document.getElementById('canvas').addEventListener('click',()=>show(i+1));
+</script>
+</body>
+</html>
